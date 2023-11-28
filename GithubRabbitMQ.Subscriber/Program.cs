@@ -18,13 +18,21 @@ namespace GithubRabiitMQ.Subscriber
 
             var channel = connection.CreateModel();
 
-            //channel.QueueDeclare("hello-queue", true, false, false);
+            var randomQueueName = channel.QueueDeclare().QueueName;
+
+            //when we dont want to delete the queue
+            //var randomQueueName = "log-database-save-queue";
+            //channel.QueueDeclare(randomQueueName, true, false, false);
+
+            channel.QueueBind(randomQueueName, "logs-fanout", "", null);
 
             channel.BasicQos(0, 1, false);
 
             var consumer = new EventingBasicConsumer(channel);
 
-            channel.BasicConsume("hello-queue", false, consumer);
+            channel.BasicConsume(randomQueueName, false, consumer);
+
+            Console.WriteLine("Logs are listening.");
 
             consumer.Received += (sender, e) => Consumer_Received(sender, e, channel);
 

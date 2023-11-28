@@ -15,15 +15,15 @@ namespace GithubRabiitMQ.Publisher
 
             var channel = connection.CreateModel();
 
-            channel.QueueDeclare("hello-queue", true, false, false);
+            channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
 
             Enumerable.Range(1, 50).ToList().ForEach(x =>
             {
-                string msg = $"Message {x}";
+                string msg = $"log {x}";
 
                 var msgBody = Encoding.UTF8.GetBytes(msg);
 
-                channel.BasicPublish(string.Empty, "hello-queue", null, msgBody);
+                channel.BasicPublish("logs-fanout", "", null, msgBody);
 
                 Console.WriteLine($"Message has been sent: {msg}");
 
