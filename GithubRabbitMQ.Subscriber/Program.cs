@@ -22,7 +22,10 @@ namespace GithubRabiitMQ.Subscriber
 
             var consumer = new EventingBasicConsumer(channel);
 
-            var queueName = "direct-queue-Critial";
+            var queueName = channel.QueueDeclare().QueueName;
+
+            var routeKey = "*.Error.*";
+            channel.QueueBind(queueName, "logs-topic",routeKey);
 
             channel.BasicConsume(queueName, false, consumer);
 

@@ -14,46 +14,26 @@ namespace GithubRabiitMQ.Publisher
             using var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
 
-            channel.ExchangeDeclare("logs-direct", durable: true, type: ExchangeType.Direct);
+            channel.ExchangeDeclare("logs-topic", durable: true, type: ExchangeType.Topic);
 
-            foreach (LogNames logName in Enum.GetValues(typeof(LogNames)))
-            {
-                var routeKey = $"route-{logName}";
-                var queueName = $"direct-queue-{logName}";
-
-                channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false);
-                channel.QueueBind(queueName, "logs-direct", routeKey, null);
-            }
-
-            var random = new Random();
+            var rnd = new Random();
             var numbers = Enumerable.Range(1, 50).ToList();
 
             foreach (var x in numbers)
             {
-                LogNames log = (LogNames)random.Next(1, 5);
+                LogNames log1 = (LogNames)rnd.Next(1, 5);
+                LogNames log2 = (LogNames)rnd.Next(1, 5);
+                LogNames log3 = (LogNames)rnd.Next(1, 5);
+                var routeKey = $"{log1}.{log2}.{log3}";
 
-                string msg = $"log-type: {log}";
-
+                string msg = $"log-type: {log1}-{log2}-{log3}";
                 var msgBody = Encoding.UTF8.GetBytes(msg);
-                var routeKey = $"route-{log}";
 
-                channel.BasicPublish("logs-direct", routeKey, null, msgBody);
+                channel.BasicPublish("logs-topic", routeKey, null, msgBody);
 
                 Console.WriteLine($"Log has been sent: {msg} to route: {routeKey}");
             }
-
-            //Enumerable.Range(1, 50).ToList().ForEach(x =>
-            //{
-            //    string msg = $"log {x}";
-
-            //    var msgBody = Encoding.UTF8.GetBytes(msg);
-
-            //    channel.BasicPublish("logs-direct", "", null, msgBody);
-
-            //    Console.WriteLine($"Message has been sent: {msg}");
-
-            //});
-
+         
             Console.ReadLine();
         }
     }
