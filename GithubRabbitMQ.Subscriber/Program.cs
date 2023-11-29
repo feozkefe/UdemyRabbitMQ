@@ -18,14 +18,22 @@ namespace GithubRabiitMQ.Subscriber
 
             var channel = connection.CreateModel();
 
+            channel.ExchangeDeclare("header-exchange", durable: true, type: ExchangeType.Headers);
+
             channel.BasicQos(0, 1, false);
 
             var consumer = new EventingBasicConsumer(channel);
 
             var queueName = channel.QueueDeclare().QueueName;
 
-            var routeKey = "*.Error.*";
-            channel.QueueBind(queueName, "logs-topic",routeKey);
+            Dictionary<string, object> headers = new Dictionary<string, object>
+            {
+                { "format", "pdf" },
+                { "shape", "a4" },
+                {"x-match","all" }
+            };
+
+            channel.QueueBind(queueName, "header-exchange",string.Empty,headers);
 
             channel.BasicConsume(queueName, false, consumer);
 
@@ -43,8 +51,6 @@ namespace GithubRabiitMQ.Subscriber
             Thread.Sleep(1500);
 
             Console.WriteLine($"Received Message: {msg}");
-
-            File.AppendAllText("log-critical.txt", msg + "\n");
 
             channel.BasicAck(e.DeliveryTag, false);
         }
