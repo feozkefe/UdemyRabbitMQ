@@ -1,6 +1,8 @@
 ﻿using RabbitMQ.Client;
+using Shared;
 using System;
 using System.Text;
+using System.Text.Json;
 
 namespace GithubRabiitMQ.Publisher
 {
@@ -24,6 +26,10 @@ namespace GithubRabiitMQ.Publisher
 
             var properties = channel.CreateBasicProperties();
             properties.Headers = headers;
+
+            var product = new Product { Id = 1, Name = "Kalem", Price = 100, Stock = 10 };
+            var productJsonString = JsonSerializer.Serialize(product);
+
             channel.BasicPublish("header-exchange", string.Empty, properties, Encoding.UTF8.GetBytes("header message"));
 
             Console.WriteLine("Message has been sent");

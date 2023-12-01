@@ -1,8 +1,10 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Shared;
 using System;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Channels;
 
 namespace GithubRabiitMQ.Subscriber
@@ -30,7 +32,7 @@ namespace GithubRabiitMQ.Subscriber
             {
                 { "format", "pdf" },
                 { "shape", "a4" },
-                {"x-match","all" }
+                {"x-match","any" }
             };
 
             channel.QueueBind(queueName, "header-exchange",string.Empty,headers);
@@ -48,9 +50,11 @@ namespace GithubRabiitMQ.Subscriber
         {
             var msg = Encoding.UTF8.GetString(e.Body.ToArray());
 
+            Product product = JsonSerializer.Deserialize<Product>(msg);
+
             Thread.Sleep(1500);
 
-            Console.WriteLine($"Received Message: {msg}");
+            Console.WriteLine($"Received Message: {product.Id}- {product.Name}");
 
             channel.BasicAck(e.DeliveryTag, false);
         }

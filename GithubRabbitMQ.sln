@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GithubRabbitMQ.Publisher", "GithubRabbitMQ.Publisher\GithubRabbitMQ.Publisher.csproj", "{7605C063-28A0-41A4-9F87-3191BA1CC1EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubRabbitMQ.Subscriber", "GithubRabbitMQ.Subscriber\GithubRabbitMQ.Subscriber.csproj", "{C2E4E62A-F41D-4D97-90C8-4F8764A10EBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GithubRabbitMQ.Subscriber", "GithubRabbitMQ.Subscriber\GithubRabbitMQ.Subscriber.csproj", "{C2E4E62A-F41D-4D97-90C8-4F8764A10EBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{4EE2FDDC-C233-497C-9414-F6D251D6D42D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C2E4E62A-F41D-4D97-90C8-4F8764A10EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2E4E62A-F41D-4D97-90C8-4F8764A10EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2E4E62A-F41D-4D97-90C8-4F8764A10EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
