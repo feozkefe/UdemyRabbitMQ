@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GithubRabbitMQ.Publisher", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GithubRabbitMQ.Subscriber", "GithubRabbitMQ.Subscriber\GithubRabbitMQ.Subscriber.csproj", "{C2E4E62A-F41D-4D97-90C8-4F8764A10EBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{4EE2FDDC-C233-497C-9414-F6D251D6D42D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{4EE2FDDC-C233-497C-9414-F6D251D6D42D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubRabbitMQ.WatermarkWebApp", "GithubRabbitMQ.WatermarkWebApp\GithubRabbitMQ.WatermarkWebApp.csproj", "{42A06557-D7E8-4F6A-AEA3-38220E3077FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EE2FDDC-C233-497C-9414-F6D251D6D42D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A06557-D7E8-4F6A-AEA3-38220E3077FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A06557-D7E8-4F6A-AEA3-38220E3077FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A06557-D7E8-4F6A-AEA3-38220E3077FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A06557-D7E8-4F6A-AEA3-38220E3077FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
