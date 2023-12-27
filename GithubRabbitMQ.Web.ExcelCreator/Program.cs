@@ -1,3 +1,4 @@
+using GithubRabbitMQ.Web.ExcelCreator.Hubs;
 using GithubRabbitMQ.Web.ExcelCreator.Models;
 using GithubRabbitMQ.Web.ExcelCreator.Services;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +35,7 @@ builder.Services.AddSingleton(sp =>
 
 builder.Services.AddSingleton<RabbitMQClientService>();
 builder.Services.AddSingleton<RabbitMQPublisher>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -66,6 +68,11 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<MyHub>("/MyHub");
+});
 
 app.MapControllerRoute(
     name: "default",

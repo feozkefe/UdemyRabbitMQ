@@ -37,7 +37,7 @@
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                         }
-                        s
+
                     </ul>
                     @if (Context.User.Identity.IsAuthenticated)
                     {
@@ -61,6 +61,37 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js" integrity="sha512-7rhBJh1om/W5Ztx7WiYOR9h2wlSaTmPyQMoHFtbT/FVNIA12y6S6I8HY9mrBS1uJ3dSU/R3qaSAXsGYuRjMDxg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            var connection = new signalR.HubConnectionBuilder().withUrl("/MyHub").build();
+
+            start();
+            function start() {
+                connection.start().then(() => {
+                    console.log("Connection started");
+                }).catch(err => {
+                    console.log(err);
+                    setTimeout(() => start(), 2000);
+                });
+            }
+
+            connection.on("FileCompleted", () => {
+                console.log("Excel creation is finished");
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your excel has been saved",
+                    showConfirmButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) { 
+                        window.location = "/product/files";
+                    }
+                });
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

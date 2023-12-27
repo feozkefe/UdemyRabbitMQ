@@ -1,6 +1,8 @@
-﻿using GithubRabbitMQ.Web.ExcelCreator.Models;
+﻿using GithubRabbitMQ.Web.ExcelCreator.Hubs;
+using GithubRabbitMQ.Web.ExcelCreator.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GithubRabbitMQ.Web.ExcelCreator.Controllers
@@ -10,10 +12,12 @@ namespace GithubRabbitMQ.Web.ExcelCreator.Controllers
     public class FilesController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IHubContext<MyHub> _hubContext;
 
-        public FilesController(AppDbContext context)
+        public FilesController(AppDbContext context, IHubContext<MyHub> hubContext) 
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -40,8 +44,11 @@ namespace GithubRabbitMQ.Web.ExcelCreator.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok();
             //signalR notification oluşturulacak
+            await _hubContext.Clients.User(userFile.UserId).SendAsync("FileCompleted");
+
+            return Ok();
+
         }
     }
 }
